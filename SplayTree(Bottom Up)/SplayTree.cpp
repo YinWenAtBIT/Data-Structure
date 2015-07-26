@@ -148,10 +148,10 @@ SplayTree searchValue(ElementType X, SplayTree T)
 
 	/*X小于当前元素且有左孩子时*/
 	if(X<T->Element && T->Left)
-		return Find(X, T->Left);
+		return searchValue(X, T->Left);
 	/*X大于当前元素且有右孩子时*/
 	else if(X >T->Element && T->Right)
-		return Find(X, T->Right);
+		return searchValue(X, T->Right);
 	/*X等于当前元素，或者没找到该元素，又没有左右孩子时*/
 	else
 		return T;
