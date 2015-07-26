@@ -1,3 +1,9 @@
+/***************************************
+Author: YinWen
+email: yinwenatbit@163.com
+date: 2015/7/22
+description:AVL树测试代码
+********************************************/
 #include "AVLTree.h"
 #include <stdlib.h>
 #include <iostream>
@@ -11,6 +17,7 @@ int main()
 	One = NULL;
 	One = Insert(10, One);
 
+	/*插入数值，先插入偶数，再插入奇数*/
 	for(i = 0; i<10; i++)
 	{
 		One = Insert(2*i, One);
@@ -23,32 +30,6 @@ int main()
 	PrintTree(One,0);
 	One = Delete(20, One);
 
-	//printf("\n\nDelete 11 \n");
-	//Delete(11, One);
-	//PrintTree(One,0);
-
-	//printf("\n\nDelete 3 \n");
-	//One =Delete(3, One);
-	//PrintTree(One,0);
-
-	//printf("\n\nDelete 1 \n");
-	//One =Delete(1, One);
-	//PrintTree(One,0);
-
-	//printf("\n\nDelete 0 \n");
-	//One =Delete(0, One);
-	//PrintTree(One,0);
-
-	//printf("6's height = %d\n",One->Lchild->Hight);
-	//printf("14's height = %d\n",One->Hight);
-
-	//printf("\n\nDelete 16 \n");
-	//One =Delete(16, One);
-	//PrintTree(One,0);
-
-	//printf("\n\nDelete 6 \n");
-	//One =Delete(6, One);
-	//PrintTree(One,0);
 
 	AVLTree temp10;
 
@@ -60,6 +41,7 @@ int main()
 	One =Delete(11, One);
 	One =Delete(13, One);
 
+	/*打印出树节点的高度*/
 	temp10 = Find(10,One);
 	printf("10's height = %d\n",temp10->Hight);
 

@@ -1,8 +1,17 @@
+/***************************************
+Author: YinWen
+email: yinwenatbit@163.com
+date: 2015/7/22
+description:AVL树
+********************************************/
 #include "AVLTree.h"
 #include <stdlib.h>
-#define Max(a,b) ((a)>(b)?(a):(b))
 #include <iostream>
 
+#define Max(a,b) ((a)>(b)?(a):(b))
+
+
+/*返回树节点的高度，如果为NULL返回-1*/
 int Hight(AVLTree T)
 {
 	if(T == NULL)
@@ -25,6 +34,7 @@ AVLTree MakeEmpty(AVLTree T)
 	return NULL;
 }
 
+/*递归查找*/
 Position Find(ElementType X, AVLTree T)
 {
 	if(T == NULL)
@@ -39,6 +49,7 @@ Position Find(ElementType X, AVLTree T)
 		return T;
 }
 
+/*非递归查找*/
 Position FindMin(AVLTree T)
 {
 	if(T !=NULL)
@@ -51,6 +62,7 @@ Position FindMin(AVLTree T)
 	return NULL;
 }
 
+/*非递归查找*/
 Position FindMax(AVLTree T)
 {
 	if(T !=NULL)
@@ -63,6 +75,7 @@ Position FindMax(AVLTree T)
 	return NULL;
 }
 
+/*递归插入*/
 AVLTree Insert(ElementType X, AVLTree T)
 {
 	if(T == NULL)
@@ -78,6 +91,7 @@ AVLTree Insert(ElementType X, AVLTree T)
 	if(X <T->Element)
 	{
 		T->Lchild = Insert(X, T->Lchild);
+		/*左边插入之后检查是否满足平衡条件，如果不平衡需要进行旋转*/
 		if( (Hight(T->Lchild)-Hight(T->Rchild)) == 2)
 		{
 			if(X< T->Lchild->Element)
@@ -89,6 +103,7 @@ AVLTree Insert(ElementType X, AVLTree T)
 	if(X >T->Element)
 	{
 		T->Rchild = Insert(X, T->Rchild);
+		/*右边插入之后检查是否满足平衡条件，如果不平衡需要进行旋转*/
 		if((Hight(T->Rchild) - Hight(T->Lchild)) ==2)
 		{
 			if(X >T->Rchild->Element)
@@ -98,11 +113,12 @@ AVLTree Insert(ElementType X, AVLTree T)
 		}
 	}
 	/*X in the Tree already, we will do nothing*/
-
+	/*插入完成更新该节点高度*/
 	T->Hight = Max(Hight(T->Lchild), Hight(T->Rchild)) +1;
 	return T;
 }
 
+/*左边树枝旋转*/
 AVLTree SingleRotateLeft(AVLTree T)
 {
 	AVLTree k1;
@@ -116,7 +132,7 @@ AVLTree SingleRotateLeft(AVLTree T)
 
 	return k1;
 }
-
+/*右边树枝旋转*/
 AVLTree SingleRotateRight(AVLTree k1)
 {
 	Position k2;
@@ -131,18 +147,21 @@ AVLTree SingleRotateRight(AVLTree k1)
 	return k2;
 }
 
+/*左边树枝双旋转*/
 AVLTree DoubleRotateLeft(AVLTree k3)
 {
 	k3->Lchild = SingleRotateRight(k3->Lchild);
 	return SingleRotateLeft(k3);
 }
 
+/*右边树枝双旋转*/
 AVLTree DoubleRotateRight(AVLTree k1)
 {
 	k1->Rchild = SingleRotateLeft(k1->Rchild);
 	return SingleRotateRight(k1);
 }
 
+/*递归删除*/
 AVLTree Delete(ElementType X, AVLTree T)
 {
 	if(T == NULL)
@@ -154,8 +173,9 @@ AVLTree Delete(ElementType X, AVLTree T)
 		if(X < T->Element)
 		{
 			T->Lchild = Delete(X, T->Lchild);
-			/*最开始未加上删除之后重新计算改点高度的代码，会导致底部的节点被删除后改点高度不变*/
+			/*删除之后需要更新该节点高度*/
 			T->Hight =Max(Hight(T->Lchild), Hight(T->Rchild))+1;
+			/*删除之后检查是否满足平衡条件，不满足需要旋转*/
 			if((Hight(T->Rchild) - Hight(T->Lchild)) == 2)
 			{
 				if(Hight(T->Rchild->Rchild) >= Hight(T->Rchild->Lchild))
@@ -168,8 +188,9 @@ AVLTree Delete(ElementType X, AVLTree T)
 		else if(X > T->Element)
 		{
 			T->Rchild = Delete(X, T->Rchild);
-			/*最开始未加上删除之后重新计算改点高度的代码，会导致底部的节点被删除后改点高度不变*/
+			/*删除之后需要更新该节点高度*/
 			T->Hight =Max(Hight(T->Lchild), Hight(T->Rchild))+1;
+			/*删除之后检查是否满足平衡条件，不满足需要旋转*/
 			if((Hight(T->Lchild) - Hight(T->Rchild)) == 2)
 			{
 				if(Hight(T->Lchild->Lchild) >= Hight(T->Lchild->Rchild))
@@ -181,11 +202,12 @@ AVLTree Delete(ElementType X, AVLTree T)
 		}
 		else
 		{
+			/*找到的树节点如果有两个孩子的话就用它右子树的最大值代替该点，再删去右子数上的最大值*/
 			if(T ->Lchild &&T->Rchild)
 			{
 				T->Element = FindMin(T->Rchild)->Element;
 				T->Rchild = Delete(T->Element, T->Rchild);
-				/*最开始未加上删除之后重新计算改点高度的代码，会导致底部的节点被删除后改点高度不变*/
+				
 				T->Hight =Max(Hight(T->Lchild), Hight(T->Rchild))+1;
 
 				if((Hight(T->Lchild) - Hight(T->Rchild)) == 2)

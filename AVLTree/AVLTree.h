@@ -1,3 +1,9 @@
+/***************************************
+Author: YinWen
+email: yinwenatbit@163.com
+date: 2015/7/22
+description:AVLÊ÷
+********************************************/
 #ifndef _AVLTREE_H
 #define _AVLTREE_H
 
