@@ -12,7 +12,8 @@ description:带有父亲指针实现的伸展树，自底向上实现伸展
 SplayTree FindMax(SplayTree T);
 SplayTree searchValue(ElementType X, SplayTree T);
 
-
+/*插入功能实现的方式是先非递归的插入，再进行Splay操作，其实过于复杂，可以优化，
+先进行Splay操作，然后再把新值作为根节点和返回的树合并就可以*/
 SplayTree insert(ElementType X, SplayTree T)
 {
 	/*空树时直接创建新的树*/
