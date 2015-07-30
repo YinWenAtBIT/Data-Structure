@@ -14,7 +14,7 @@ Position find(ElementType X, List L)
 {
 	if(L == NULL)
 		return NULL;
-	Position P = L->Next;
+	Position P = L;
 	while(P !=NULL && P->Element !=X)
 		P = P->Next;
 
@@ -37,7 +37,7 @@ void Delete(ElementType X, List L)
 
 Position findPrevious(ElementType X, List L)
 {
-	Position P = L->Next;
+	Position P = L;
 
 	while(P->Next != NULL && P->Next->Element != X)
 		P = P->Next;
@@ -47,7 +47,7 @@ Position findPrevious(ElementType X, List L)
 void insert(ElementType X, Position P)
 {
 	Position temp;
-	temp = new struct Node;
+	temp = (Position)malloc(sizeof(struct Node));
 	if(temp !=NULL)
 	{
 		temp->Element = X;
@@ -66,7 +66,7 @@ void deleteList(List L)
 	while(P !=NULL)
 	{
 		temp = P->Next;
-		delete P;
+		free (P);
 		P = temp;
 	}
 }

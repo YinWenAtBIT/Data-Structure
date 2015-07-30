@@ -1,8 +1,8 @@
 /***************************************
 Author: YinWen
 email: yinwenatbit@163.com
-date: 2015/7/22
-description:AVLÊ÷
+date: 2015/7/30
+description:¹þÏ£±í
 ********************************************/
 #include "list.h"
 

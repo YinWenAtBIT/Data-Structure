@@ -40,7 +40,7 @@ HashTable initializeTable(int TableSize)
 	return H;
 }
 
-void DestoryTable(HashTable H)
+void DestroyTable(HashTable H)
 { 
 	int i;
 	for(i = 0; i<H->TableSize; i++)
@@ -98,13 +98,13 @@ void deleteKey(ElementType Key, HashTable H)
 	L = H->TheList[Hash(Key, H->TableSize)];
 	P = find(Key, L);
 	if(P == NULL)
-		fprintf(stderr, "%d do not exist", Key);
+		fprintf(stderr, "%d do not exist\n", Key);
 	else
 	{
-		/*只有一个元素*/
+		/*被删除的元素为第一个*/
 		if(L == P)
 		{
-			L= NULL;
+			H->TheList[Hash(Key, H->TableSize)] = P->Next;
 			free(P);
 		}
 		else
