@@ -1,3 +1,9 @@
+/***************************************
+Author: YinWen
+email: yinwenatbit@163.com
+date: 2015/8/3
+description:¶þ²æ¶Ñ
+********************************************/
 #include"binaryHeap.h"
 #include <stdlib.h>
 #include <iostream>
