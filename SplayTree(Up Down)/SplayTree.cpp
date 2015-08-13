@@ -9,8 +9,8 @@ description:SplayTree UpDown自顶向下，不包含父亲节点
 #include <iostream>
 
 
-/*插入功能实现的方式是先非递归的插入，再进行Splay操作，其实过于复杂，可以优化，
-先进行Splay操作，然后再把新值作为根节点和返回的树合并就可以*/
+/*先进行Splay操作，判断新的根节点是否等于要插入的值，
+如果要插入的值不存在，把新值作为根节点和返回的树合并就可以*/
 SplayTree insert(ElementType X, SplayTree T)
 {
 	/*空树时直接创建新的树*/
