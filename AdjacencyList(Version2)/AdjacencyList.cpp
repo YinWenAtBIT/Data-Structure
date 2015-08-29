@@ -24,18 +24,8 @@ void insertVertex(VertexType vertex, Graph G)
 	G->vertex++;
 }
 
-/*插入边，需要先进行判断边的两个顶点是否存在，不存在则先插入顶点*/
-void insertEdge(VertexType vertex1, VertexType vertex2, WeightType weight, Graph G)
+void insertEdgeWithIndex(Index P1, Index P2, WeightType weight, Graph G)
 {
-	Position P1, P2;
-	P1 = FindKey(vertex1, G);
-	P2 = FindKey(vertex2, G);
-	
-	if(G->TheCells[P2].Info != Legitimate)
-		insertVertex(vertex2, G);
-	if(G->TheCells[P1].Info != Legitimate)
-		insertVertex(vertex1, G);
-	
 	/*加入新的边*/
 	Edge newEdge = (Edge)malloc(sizeof(EdgeNode));
 	newEdge->vertexIndex = P2;
@@ -46,26 +36,34 @@ void insertEdge(VertexType vertex1, VertexType vertex2, WeightType weight, Graph
 	G->edge++;
 }
 
+/*插入边，需要先进行判断边的两个顶点是否存在，不存在则先插入顶点*/
+void insertEdge(VertexType vertex1, VertexType vertex2, WeightType weight, Graph G)
+{
+	Position P1, P2;
+	P1 = FindKey(vertex1, G);
+
+	/*需要先插入顶点1，再来判断顶点2的序号，
+	原有代码是同时寻址，结果寻址到了同一个位置。
+	后插入的顶点顶替了先插入的顶点*/
+
+	if(G->TheCells[P1].Info != Legitimate)
+		insertVertex(vertex1, G);
+
+	P2 = FindKey(vertex2, G);
+	if(G->TheCells[P2].Info != Legitimate)
+		insertVertex(vertex2, G);
+	
+	insertEdgeWithIndex(P1, P2, weight, G);
+}
+
 /*寻找顶点索引*/
 Position findVertex(VertexType vertex, Graph G)
 {
 	return FindKey(vertex, G);
 }
 
-
-/*移除边，先确认顶点存在*/
-void removeEdge(VertexType vertex1, VertexType vertex2, Graph G)
+void removeEdgeWithIndex(Index P1, Index P2, Graph G)
 {
-	Position P1, P2;
-	P1 = FindKey(vertex1, G);
-	P2 = FindKey(vertex2, G);
-	
-	if(G->TheCells[P2].Info != Legitimate && G->TheCells[P1].Info == Legitimate)
-	{
-		fprintf(stderr, "Edge not exist\n");
-		return;
-	}
-
 	VertexNode * V = &G->TheCells[P1];
 
 	Edge parent = V->next;
@@ -89,6 +87,23 @@ void removeEdge(VertexType vertex1, VertexType vertex2, Graph G)
 	}
 }
 
+/*移除边，先确认顶点存在*/
+void removeEdge(VertexType vertex1, VertexType vertex2, Graph G)
+{
+	Position P1, P2;
+	P1 = FindKey(vertex1, G);
+	P2 = FindKey(vertex2, G);
+	
+	if(G->TheCells[P2].Info != Legitimate && G->TheCells[P1].Info == Legitimate)
+	{
+		fprintf(stderr, "Edge not exist\n");
+		return;
+	}
+
+	removeEdgeWithIndex(P1, P2, G);
+
+}
+
 /*删除边*/
 void DestroyEdge(Edge E)
 {
@@ -110,9 +125,6 @@ void  DestroyGraph(Graph G)
 
 	DestroyTable(G);
 }
-
-
-
 
 
 

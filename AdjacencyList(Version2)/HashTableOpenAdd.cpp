@@ -57,13 +57,13 @@ void DestroyTable(HashTable H)
 Position FindKey(VertexType Key, HashTable H)
 {
 	Position P;
-	int collision =0;
+
 	P = Hash(Key, H->TableSize);
 	while(H->TheCells[P].Info != Empty && strcmp(Key, H->TheCells[P].vertexName)!= 0 )
 	{
 		/* F(i) = F(i-1) +2i-1 */
-		P +=  ++collision;
-		if(P > H->TableSize)
+		P += 1;
+		if(P >= H->TableSize)
 			P -= H->TableSize;
 	}
 
