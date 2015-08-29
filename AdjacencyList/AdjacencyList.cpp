@@ -29,12 +29,18 @@ void insertEdge(VertexType vertex1, VertexType vertex2, WeightType weight, Graph
 {
 	Position P1, P2;
 	P1 = FindKey(vertex1, G);
-	P2 = FindKey(vertex2, G);
-	
-	if(G->TheCells[P2].Info != Legitimate)
-		insertVertex(vertex2, G);
+
+	/*需要先插入顶点1，再来判断顶点2的序号，
+	原有代码是同时寻址，结果寻址到了同一个位置。
+	后插入的顶点顶替了先插入的顶点*/
+
 	if(G->TheCells[P1].Info != Legitimate)
 		insertVertex(vertex1, G);
+
+	P2 = FindKey(vertex2, G);
+	if(G->TheCells[P2].Info != Legitimate)
+		insertVertex(vertex2, G);
+
 	
 	/*加入新的边*/
 	Edge newEdge = (Edge)malloc(sizeof(EdgeNode));
