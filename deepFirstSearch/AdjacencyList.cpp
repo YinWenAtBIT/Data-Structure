@@ -69,6 +69,12 @@ Position findVertex(VertexType vertex, Graph G)
 	return FindKey(vertex, G);
 }
 
+void removeEdgeWithIndexNoDirect(Index P1, Index P2, Graph G)
+{
+	removeEdgeWithIndex(P1, P2, G);
+	removeEdgeWithIndex(P2, P1, G);
+}
+
 void removeEdgeWithIndex(Index P1, Index P2, Graph G)
 {
 	VertexNode * V = &G->TheCells[P1];

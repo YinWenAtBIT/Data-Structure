@@ -8,6 +8,7 @@ description:使用邻接表实现图的数据结构
 
 
 #include "HashTableOpenAdd.h"
+#include "list.h"
 #define Infinity 0x7fffffff
 
 #ifndef _ADJACENCY_LIST
@@ -42,6 +43,7 @@ void removeEdgeNoDirect(VertexType vertex1, VertexType vertex2, Graph G);
 
 /*使用顶点序号删除边，不存在则删除终止*/
 void removeEdgeWithIndex(Index P1, Index P2, Graph G);
+void removeEdgeWithIndexNoDirect(Index P1, Index P2, Graph G);
 
 /*销毁图*/
 void  DestroyGraph(Graph G);
@@ -87,6 +89,9 @@ Table deepFirstSearch(Graph G, VertexType start);
 
 /*寻找割断点*/
 void FindArticulation(VertexType S, Graph G);
+
+/*寻找欧拉回路，已经默认图是欧拉图*/
+List eulerCircuit(VertexType start, Graph G);
 
 /*初始化路径表*/
 void initTable(Index V, int num, Table T);
